@@ -64,7 +64,7 @@ def main(package_name, path_uml):
     itog = transform_to_uml_format()
     if len(itog) > 0:
         render_plantuml_file("@startuml\n" + itog + "@enduml\n", path_uml)
-        showing_pic("vremen1.png")
+        showing_pic("vremen.png")
     else:
         print("такого пакета не нашлось")
 
