@@ -7,9 +7,9 @@ dependencies = {}
 
 
 def showing_pic(name):
-    if os.name == "nt":  # winda
+    if os.name == "nt":  # windows
         subprocess.run(["start", os.getcwd() + "\\" + name], shell=True)
-    else:
+    else:  # unix
         subprocess.run(["xdg-open", os.getcwd() + "\\" + name])
 
 
@@ -18,6 +18,7 @@ def render_plantuml_file(uml_text, path_to_uml):
         f.write(uml_text)
     try:
         subprocess.run(["java", "-jar", path_to_uml, "vremen.puml"], check=True)
+        return 1
     except subprocess.CalledProcessError as e:
         print("Ошибка при запуске PlantUML:", e)
 
