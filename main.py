@@ -2,8 +2,8 @@ import sys
 
 
 def main():
-    if len(sys.argv) != 3:
-        print("Inctruction: python script.py <path_to_plantuml> <name_package>")
+    if len(sys.argv) != 2:
+        print("Inctruction: python <.../main.py> <name_package>")
         sys.exit(1)
 
 
