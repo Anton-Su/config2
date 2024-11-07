@@ -65,7 +65,7 @@ def main(package_name, path_uml):
         print('os error')
         return
     get_dependencies(package_name)
-    detect_dependencies_recur(path_to_spisok_package, package_name)
+    detect_dependencies_recur(path_to_spisok_package)
     itog = transform_to_uml_format()
     if len(itog) > 0:
         render_plantuml_file("@startuml\n" + itog + "@enduml\n", path_uml)
