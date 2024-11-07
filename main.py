@@ -1,10 +1,16 @@
 import sys
 import os
 import subprocess
-from PIL import Image
 
 path_to_name_package = os.getcwd() + "\\dependencies.txt"
 dependencies = {}
+
+
+def showing_pic(name):
+    if os.name == "nt": # winda
+        subprocess.run(["start", os.getcwd() + "\\" + name], shell=True)
+    else:
+        subprocess.run(["xdg-open", os.getcwd() + "\\" + name])
 
 
 def render_plantuml_file(uml_text, path_to_uml):
@@ -50,8 +56,7 @@ def main(package_name, path_uml):
     detect_dependencies_recur(path_to_name_package, package_name)
     itog = transform_to_uml_format()
     render_plantuml_file(itog, path_to_uml)
-    img = Image.open("vremen.png")
-    img.show()
+    showing_pic("vremen.png")
 
 
 if __name__ == "__main__":
