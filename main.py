@@ -50,6 +50,8 @@ def main(package_name, path_uml):
     detect_dependencies_recur(path_to_name_package, package_name)
     itog = transform_to_uml_format()
     render_plantuml_file(itog, path_to_uml)
+    img = Image.open("vremen.png")
+    img.show()
 
 
 if __name__ == "__main__":
