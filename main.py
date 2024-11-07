@@ -7,7 +7,7 @@ dependencies = {}
 
 
 def showing_pic(name):
-    if os.name == "nt": # winda
+    if os.name == "nt":  # winda
         subprocess.run(["start", os.getcwd() + "\\" + name], shell=True)
     else:
         subprocess.run(["xdg-open", os.getcwd() + "\\" + name])
@@ -27,7 +27,6 @@ def transform_to_uml_format():
     for package, deps in dependencies.items():
         for dep in deps:
             itog += f"{package} --> {dep}\n"
-    itog = "@startuml\n" + itog + "@enduml\n"
     return itog
 
 
@@ -55,14 +54,19 @@ def main(package_name, path_uml):
         return
     detect_dependencies_recur(path_to_name_package, package_name)
     itog = transform_to_uml_format()
-    render_plantuml_file(itog, path_to_uml)
-    showing_pic("vremen.png")
+    if len(itog) > 0:
+        render_plantuml_file("@startuml\n" + itog + "@enduml\n", path_uml)
+        showing_pic("vremen.png")
+    else:
+        print("такого пакета не нашлось")
 
 
 if __name__ == "__main__":
-    path_to_uml = r"C:\Users\Antua\PycharmProjects\config2\plantuml-1.2024.7.jar"
-    package_name = "libcurl4"
-    if len(sys.argv) == 1: # 3
-        #path_uml = sys.argv[1]
-        #package_name = sys.argv[2]
-        main(package_name, path_to_uml)
+    #path_to_uml = r"C:\Users\Antua\PycharmProjects\config2\plantuml-1.2024.7.jar"
+    #package_name = "libcurl4"
+    if len(sys.argv) != 3:
+        print("Аргументы указаны неверно")
+        exit()
+    path_uml = sys.argv[1]
+    package_name = sys.argv[2]
+    main(package_name, path_uml)
