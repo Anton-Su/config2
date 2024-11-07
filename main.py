@@ -2,10 +2,8 @@ import sys
 
 
 def main():
-    if len(sys.argv) == 3:
-        pass
-    sys.exit()
-
+    pass
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 3:
+        main()
