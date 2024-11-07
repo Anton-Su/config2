@@ -2,9 +2,9 @@ import sys
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Inctruction: python <.../main.py> <.../name_package>")
-        sys.exit(1)
+    if len(sys.argv) == 3:
+        pass
+    sys.exit()
 
 
 if __name__ == "__main__":
