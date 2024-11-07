@@ -1,0 +1,10 @@
+@startuml
+libcurl4 --> libc6
+libcurl4 --> libgnutls30
+libcurl4 --> libssh-4
+libcurl4 --> zlib1g
+libc6 --> libgcc-s1
+libc6 --> libcrypt1
+libc6 --> libidn2-0
+zlib1g --> libc6
+@enduml
