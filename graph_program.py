@@ -16,7 +16,7 @@ def showing_pic(name):
     if not os.path.exists(path_picture):
         print("picture not found")
         return False
-    im = Image.open(r"C:\Users\System-Pc\Desktop\ybear.jpg")
+    im = Image.open(path_picture)
     im.show()
     return True
 
@@ -36,7 +36,7 @@ def transform_to_uml_format():
     itog = ''
     for package, deps in dependencies.items():
         for dep in deps:
-            itog += f"{package} --> {dep}\n"
+            itog += f'"{package}" --> "{dep}"\n'
     return itog
 
 
@@ -54,7 +54,6 @@ def detect_dependencies_recur(file_path, name_package):
                 stroka = stroka.replace(" |", ',').split("Depends: ")[1]
                 stroka = [i if i.find("(") == -1 else i.split(" (")[0] for i in stroka.split(', ')]
                 dependencies[name_package].extend(stroka)
-                print(dependencies)
     if flag:
         for i in dependencies[name_package]:
             if i not in dependencies:
@@ -85,12 +84,12 @@ def main(package_name, path_uml):
         return
     get_dependencies("http://archive.ubuntu.com/ubuntu/dists/noble/main/binary-amd64/Packages.gz")
     detect_dependencies_recur(f"{output_name}.txt", package_name)
-    # itog = transform_to_uml_format()
-    # if len(itog) > 0:
-    #     render_plantuml_file("@startuml\n" + itog + "@enduml\n", path_uml)
-    #     showing_pic(f"{output_name}.png")
-    # else:
-    #     print("такого пакета не нашлось")
+    itog = transform_to_uml_format()
+    if len(itog) > 0:
+        render_plantuml_file("@startuml\n" + itog + "@enduml\n", path_uml)
+        showing_pic(f"{output_name}.png")
+    else:
+        print("такого пакета не нашлось")
 
 
 if __name__ == "__main__":
