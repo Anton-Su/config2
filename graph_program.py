@@ -43,6 +43,8 @@ def detect_dependencies_recur(file_path):
     with open(file_path, "r") as f:
         for line in f:
             stroka = line.strip()
+            if not stroka:
+                continue
             if not stroka.startswith("Depends:"):
                 current_dependence = stroka
                 dependencies[current_dependence] = []
@@ -55,16 +57,16 @@ def get_dependencies(package_name):
     result = subprocess.run(
         ["apt-cache", "depends", package_name], capture_output=True,
         text=True, check=True)
-    # Записываем вывод команды в файл
     with open(f"{output_name}.txt", "w") as file:
         file.write(result.stdout)
+    return 1
 
 
 def main(package_name, path_uml):
     if not os.path.exists(path_uml) or not os.path.exists(path_to_spisok_package):
         print('os error')
         return
-    get_dependencies(package_name)
+    # get_dependencies(package_name)
     detect_dependencies_recur(path_to_spisok_package)
     itog = transform_to_uml_format()
     if len(itog) > 0:
