@@ -1,0 +1,18 @@
+Package: libxml2
+  Depends: zlib1g
+  Depends: libicu66
+  Depends: liblzma5
+
+Package: libicu66
+  Depends: libc6
+  Depends: libgcc-s1
+
+Package: liblzma5
+  Depends: libc6
+
+Package: libc6
+  Depends: libgcc-s1
+  Depends: libpthread
+
+Package: zlib1g
+  Depends: libc6

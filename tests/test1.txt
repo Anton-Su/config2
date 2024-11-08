@@ -1,0 +1,18 @@
+Package: curl
+  Depends: libc6
+  Depends: libcurl4
+  Depends: zlib1g
+
+Package: libc6
+  Depends: libgcc-s1
+  Depends: libcrypt1
+  Depends: libidn2-0
+
+Package: libcurl4
+  Depends: libc6
+  Depends: libgnutls30
+  Depends: libssh-4
+  Depends: zlib1g
+
+Package: zlib1g
+  Depends: libc6

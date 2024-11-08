@@ -1,0 +1,18 @@
+Package: openssl
+  Depends: libc6
+  Depends: libssl3
+  Depends: zlib1g
+
+Package: libssl3
+  Depends: libc6
+  Depends: libcrypto3
+
+Package: libcrypto3
+  Depends: libc6
+
+Package: libc6
+  Depends: libgcc-s1
+  Depends: libpthread
+
+Package: zlib1g
+  Depends: libc6
