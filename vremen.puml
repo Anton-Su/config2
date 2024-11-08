@@ -1,11 +1,13 @@
 @startuml
-libxml2 --> zlib1g
-libxml2 --> libicu66
-libxml2 --> liblzma5
-libicu66 --> libc6
-libicu66 --> libgcc-s1
-liblzma5 --> libc6
+curl --> libc6
+curl --> libcurl4
+curl --> zlib1g
 libc6 --> libgcc-s1
-libc6 --> libpthread
+libc6 --> libcrypt1
+libc6 --> libidn2-0
+libcurl4 --> libc6
+libcurl4 --> libgnutls30
+libcurl4 --> libssh-4
+libcurl4 --> zlib1g
 zlib1g --> libc6
 @enduml

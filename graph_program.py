@@ -1,8 +1,12 @@
 import sys
 import os
 import subprocess
+from PIL import Image
+import requests
+import gzip
+import io
 
-path_to_spisok_package = os.getcwd() + "\\dependencies.txt"
+# path_to_spisok_package = os.getcwd() + "\\dependencies.txt"
 dependencies = {}
 output_name = "vremen"
 
@@ -12,10 +16,8 @@ def showing_pic(name):
     if not os.path.exists(path_picture):
         print("picture not found")
         return False
-    if os.name == "nt":  # windows
-        subprocess.run(["start", path_picture], shell=True)
-    else:  # unix
-        subprocess.run(["xdg-open", path_picture])
+    im = Image.open(r"C:\Users\System-Pc\Desktop\ybear.jpg")
+    im.show()
     return True
 
 
@@ -38,42 +40,57 @@ def transform_to_uml_format():
     return itog
 
 
-def detect_dependencies_recur(file_path):
-    current_dependence = ""
-    with open(file_path, "r") as f:
+def detect_dependencies_recur(file_path, name_package):
+    flag = False
+    with open(file_path, "r", encoding="utf8") as f:
         for line in f:
             stroka = line.strip()
-            if not stroka:
-                continue
-            if not stroka.startswith("Depends:"):
-                current_dependence = stroka
-                dependencies[current_dependence] = []
-            else:
-                dependencies[current_dependence].append(stroka.split(": ")[1])
+            if stroka.startswith("Package:") and stroka.split("Package: ")[1] == name_package:
+                 dependencies[name_package] = []
+                 flag = True
+            elif flag and stroka.startswith("Package:"):
+                break
+            elif flag and stroka.startswith("Depends:"):
+                stroka = stroka.replace(" |", ',').split("Depends: ")[1]
+                stroka = [i if i.find("(") == -1 else i.split(" (")[0] for i in stroka.split(', ')]
+                dependencies[name_package].extend(stroka)
+                print(dependencies)
+    if flag:
+        for i in dependencies[name_package]:
+            if i not in dependencies:
+                detect_dependencies_recur(file_path, i)
     return dependencies
 
 
-def get_dependencies(package_name):
-    result = subprocess.run(
-        ["apt-cache", "depends", package_name], capture_output=True,
-        text=True, check=True)
-    with open(f"{output_name}.txt", "w") as file:
-        file.write(result.stdout)
+def get_dependencies(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            with gzip.GzipFile(fileobj=io.BytesIO(response.content)) as gz_file:
+                text_content = gz_file.read().decode("utf-8")
+                with open(f"{output_name}.txt", "w", encoding="utf-8") as file:
+                    file.write(text_content)
+                return text_content
+        else:
+            print(f"Ошибка при загрузке архива: {response.status_code}")
+            return None
+    except requests.RequestException as e:
+        print(f"Ошибка при загрузке: {e}")
     return 1
 
 
 def main(package_name, path_uml):
-    if not os.path.exists(path_uml) or not os.path.exists(path_to_spisok_package):
+    if not os.path.exists(path_uml):
         print('os error')
         return
-    # get_dependencies(package_name)
-    detect_dependencies_recur(path_to_spisok_package)
-    itog = transform_to_uml_format()
-    if len(itog) > 0:
-        render_plantuml_file("@startuml\n" + itog + "@enduml\n", path_uml)
-        showing_pic(f"{output_name}.png")
-    else:
-        print("такого пакета не нашлось")
+    get_dependencies("http://archive.ubuntu.com/ubuntu/dists/noble/main/binary-amd64/Packages.gz")
+    detect_dependencies_recur(f"{output_name}.txt", package_name)
+    # itog = transform_to_uml_format()
+    # if len(itog) > 0:
+    #     render_plantuml_file("@startuml\n" + itog + "@enduml\n", path_uml)
+    #     showing_pic(f"{output_name}.png")
+    # else:
+    #     print("такого пакета не нашлось")
 
 
 if __name__ == "__main__":
