@@ -6,7 +6,6 @@ import requests
 import gzip
 import io
 
-# path_to_spisok_package = os.getcwd() + "\\dependencies.txt"
 dependencies = {}
 output_name = "vremen"
 
