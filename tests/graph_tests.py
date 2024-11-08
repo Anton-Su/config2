@@ -1,7 +1,7 @@
 from unittest import TestCase
 import graph_program
 
-path_to_uml = r"C:\Users\Antua\PycharmProjects\config2\plantuml-1.2024.7.jar"
+path_to_uml = r"что-то/что-то.jar"
 
 
 class Random(TestCase):
