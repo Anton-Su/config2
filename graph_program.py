@@ -85,12 +85,15 @@ def main(package_name, path_uml):
         return
     get_dependencies("http://archive.ubuntu.com/ubuntu/dists/noble/main/binary-amd64/Packages.gz")
     detect_dependencies_recur(f"{output_name}.txt", package_name)
+    os.remove(f"{output_name}.txt")
     itog = transform_to_uml_format()
     if len(itog) > 0:
         render_plantuml_file("@startuml\n" + itog + "@enduml\n", path_uml)
         showing_pic(f"{output_name}.png")
+        os.remove(f"{output_name}.puml")
+        os.remove(f"{output_name}.png")
     else:
-        print("такого пакета не нашлось")
+        print("такого пакета не нашлось/ни единой зависимости для пакета не найдено")
 
 
 if __name__ == "__main__":
