@@ -25,7 +25,7 @@ class Random(TestCase):
                          {'libxml2': ['zlib1g', 'libicu66', 'liblzma5'], 'libicu66': ['libc6', 'libgcc-s1'],
                           'liblzma5': ['libc6'], 'libc6': ['libgcc-s1', 'libpthread'], 'zlib1g': ['libc6']})
 
-    def test_transform(self):
+    def test_transform_1(self):
         graph_program.dependencies = {'curl': ['libc6', 'libcurl4', 'zlib1g'],
                                       'libc6': ['libgcc-s1', 'libcrypt1', 'libidn2-0'],
                                       'libcurl4': ['libc6', 'libgnutls30', 'libssh-4', 'zlib1g'],
@@ -53,7 +53,7 @@ class Random(TestCase):
                                                                   '"libgcc-s1"\n"liblzma5" --> "libc6"\n"libc6" --> '
                                                                   '"libgcc-s1"\n"libc6" --> "libpthread"\n"zlib1g" --> "libc6"\n')
 
-    def test_showing(self):  # нашлась
+    def test_showing1(self):  # нашлась
         self.assertEqual(graph_program.showing_pic("vremen.png"), True)
 
     def test_showing2(self):  # не нашлось
