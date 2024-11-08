@@ -44,6 +44,8 @@ def detect_dependencies_recur(file_path, name_package):
     with open(file_path, "r", encoding="utf8") as f:
         for line in f:
             stroka = line.strip()
+            if not stroka:
+                continue
             if stroka.startswith("Package:") and stroka.split("Package: ")[1] == name_package:
                  dependencies[name_package] = []
                  flag = True

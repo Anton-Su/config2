@@ -1,10 +1,4 @@
 @startuml
-"accountsservice" --> "default-dbus-system-bus"
-"accountsservice" --> "dbus-system-bus"
-"accountsservice" --> "libaccountsservice0"
-"accountsservice" --> "libc6"
-"accountsservice" --> "libglib2.0-0t64"
-"accountsservice" --> "libpolkit-gobject-1-0"
 "libaccountsservice0" --> "libc6"
 "libaccountsservice0" --> "libcrypt1"
 "libaccountsservice0" --> "libglib2.0-0t64"
@@ -41,7 +35,4 @@
 "liblz4-1" --> "libc6"
 "liblzma5" --> "libc6"
 "libzstd1" --> "libc6"
-"libpolkit-gobject-1-0" --> "libc6"
-"libpolkit-gobject-1-0" --> "libglib2.0-0t64"
-"libpolkit-gobject-1-0" --> "libsystemd0"
 @enduml
