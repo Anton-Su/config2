@@ -35,7 +35,7 @@ def transform_to_uml_format():
     itog = ''
     for package, deps in dependencies.items():
         for dep in deps:
-            itog += f'"{package}" --> "{dep}"\n'
+            itog += f'({package}) --> ({dep})\n'
     return itog
 
 
